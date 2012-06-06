@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
   protected 
   def get_user_details
     begin 
@@ -118,15 +117,17 @@ class ApplicationController < ActionController::Base
         end
       end
    
-      sets_progress  = Photo.select('count(status) as count, status, photoset_id').where('photoset_id IN (?)', sets_tracked_array).group('photoset_id, status')
-          
-              
+#      sets_progress  = Photo.select('count(status) as count, status, photoset_id').where('photoset_id IN (?)', sets_tracked_array).group('photoset_id, status')
+      sets_progress_count = Photoset.only(:status).count
+    
+      sets_progress = Photoset.only(:status,:photoset_id).aggregate
+      puts sets_progress
       puts sets_progress.inspect
      #Put progress back into the original map
       sets_progress.each do |set|
-        status = set.status.to_i == 2 ? 'done' : 'progress' 
+        status = sets_progress[set[status].to_i] == 2 ? 'done' : 'progress' 
         sets_tracked_flickr[set.photoset.id][status] ||= 0 
-        sets_tracked_flickr[set.photoset.id][status] += set.count
+        sets_tracked_flickr[set.photoset.id][status] += sets_progress_count
       end
     
 
