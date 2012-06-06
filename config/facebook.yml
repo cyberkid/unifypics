@@ -2,6 +2,6 @@
   app_id: '432551743429874'
   secret_key: '50287a37688a9e585e5bab103ea73570'
 
-production:
+ production:
   app_id: '432551743429874'
   secret_key: '50287a37688a9e585e5bab103ea73570'
