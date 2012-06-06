@@ -32,8 +32,8 @@ class User
   
   def get_all_flickr_sets
     config = YAML.load_file(Rails.root.join("config/flickr.yml"))[Rails.env]
-    FlickRaw.api_key = config['app_id']
-    FlickRaw.shared_secret = config['shared_secret']
+    FlickRaw.api_key = config['key']
+    FlickRaw.shared_secret = config['secret']
 
     flickr = FlickRaw::Flickr.new
     flickr.access_token = self.flickr_access_token

@@ -6,8 +6,8 @@ require 'json'
 require 'net/http'
 require 'time'
 
-FlickRaw.api_key = FlickrConfig[:API_KEY] 
-FlickRaw.shared_secret = FlickrConfig[:API_SECRET]
+FlickRaw.api_key = FlickrConfig[:KEY] 
+FlickRaw.shared_secret = FlickrConfig[:SECRET]
 
 class Job
   
@@ -18,8 +18,8 @@ class Job
     
     if initialize_flickr
       config = YAML.load_file(Rails.root.join("config/flickr.yml"))[Rails.env]
-      FlickRaw.api_key = config['app_id']
-      FlickRaw.shared_secret = config['shared_secret']
+      FlickRaw.api_key = config['key']
+      FlickRaw.shared_secret = config['secret']
     
       flickr.access_token = flickr_access_token
       flickr.access_secret  = flickr_access_secret

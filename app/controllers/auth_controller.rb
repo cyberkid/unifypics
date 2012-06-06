@@ -73,8 +73,8 @@ class AuthController < ApplicationController
 
     # Load all flickr app config
     config = YAML.load_file(Rails.root.join("config/flickr.yml"))[Rails.env]
-    FlickRaw.api_key = config['app_id']
-    FlickRaw.shared_secret = config['shared_secret']
+    FlickRaw.api_key = config['key']
+    FlickRaw.shared_secret = config['secret']
 
     # Generate a request_token with callback set appropriately
     token = flickr.get_request_token :oauth_callback => url_for(:action => "flickr_callback")

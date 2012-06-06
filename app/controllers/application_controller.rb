@@ -108,9 +108,9 @@ class ApplicationController < ActionController::Base
       end
 
       #Fetch all the photosets in progress and processed.
-      sets_tracked_array = Photoset.where('user_id = ? and source = ?', user, Constants::SOURCE_FLICKR)
-    
-    
+      sets_tracked_array = Photoset.where(:user_id => user.id,:source => Constants::SOURCE_FLICKR)
+      puts sets_tracked_array 
+
       #Remap them by our photoset primary key
       sets_tracked_flickr = {}
       sets_tracked_array.each do |set|
@@ -118,18 +118,20 @@ class ApplicationController < ActionController::Base
           sets_tracked_flickr[set.id] = set
         end
       end
+   
+#      sets_progress  = Photo.select('count(status) as count, status, photoset_id').where('photoset_id IN (?)', sets_tracked_array).group('photoset_id, status')
+     # sets_progress = Photoset     
+              
+ #     puts sets_progress.inspect
+     #Put progress back into the original map
+  #    sets_progress.each do |set|
+   #     status = set.status.to_i == 2 ? 'done' : 'progress' 
+    #    sets_tracked_flickr[set.photoset.id][status] ||= 0 
+     #   sets_tracked_flickr[set.photoset.id][status] += set.count
+      #end
     
-      sets_progress  = Photo.select('count(status) as count, status, photoset_id').where('photoset_id IN (?)', sets_tracked_array).group('photoset_id, status')
-    
-      puts sets_progress.inspect
-      #Put progress back into the original map
-      sets_progress.each do |set|
-        status = set.status.to_i == 2 ? 'done' : 'progress' 
-        sets_tracked_flickr[set.photoset.id][status] ||= 0 
-        sets_tracked_flickr[set.photoset.id][status] += set.count
-      end
-    
-      #Put flickr references inside the map
+
+    #Put flickr references inside the map
       sets_tracked_flickr.each do |id,set|
         
         sets_tracked_flickr[id]['done']  ||= 0

@@ -1,7 +1,7 @@
 development:
-  app_id: ''
-  shared_secret: ''
+  key: 'f3d65374262d8eabc7239e224a88409b'
+  secret: '36a87cb13551d7d8'
 
 production:
-  app_id: ''
-  shared_secret: ''
+  Key: '8e8daffb5b32c5e5ffc9fdf03adbd627'
+  Secret: 'fb0ca5c3af3da655'
